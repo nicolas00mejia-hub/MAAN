@@ -1,0 +1,25 @@
+---
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+<section class="section" id="por-que">
+  <div class="wrap why">
+    <header class="section__head why__head" data-reveal>
+      <p class="eyebrow">{t.why.eyebrow}</p>
+      <h2>{t.why.title} <em>{t.why.titleAccent}</em></h2>
+    </header>
+
+    <ul class="why__grid">
+      {t.why.items.map((w, i) => (
+        <li class="why__item" data-reveal style={`--d: ${(i % 2) * 80}ms`}>
+          <h3>{w.name}</h3>
+          <p>{w.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

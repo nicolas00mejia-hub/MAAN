@@ -1,0 +1,109 @@
+---
+import { site } from '../config/site';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const c = t.contact;
+---
+<section class="section contact" id="contacto">
+  <div class="wrap contact__in">
+    <div class="contact__intro" data-reveal>
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h2>{c.title} <em>{c.titleAccent}</em></h2>
+      <p class="lead">{c.lead}</p>
+      <p class="contact__direct">
+        {c.orWrite} <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+      {site.whatsapp && (
+        <a class="btn btn--dark" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">
+          {c.whatsapp} <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
+
+    <form
+      class="form"
+      data-reveal
+      data-form
+      data-endpoint={site.formEndpoint}
+      data-email={site.email}
+      data-subject={`${c.subject} — ${site.name}`}
+      data-sending={c.sending}
+    >
+      <label class="field">
+        <span>{c.name}</span>
+        <input type="text" name="name" autocomplete="name" required />
+      </label>
+      <label class="field">
+        <span>{c.email}</span>
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label class="field">
+        <span>{c.company}</span>
+        <input type="text" name="company" autocomplete="organization" />
+      </label>
+      <label class="field">
+        <span>{c.service}</span>
+        <select name="service">
+          {c.serviceOptions.map((o) => <option>{o}</option>)}
+        </select>
+      </label>
+      <label class="field field--full">
+        <span>{c.message}</span>
+        <textarea name="message" rows="4" required></textarea>
+      </label>
+      <!-- Trampa anti-spam: los humanos no ven ni llenan este campo. -->
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="field--full form__foot">
+        <button class="btn btn--dark" type="submit">{c.send} <span aria-hidden="true">→</span></button>
+        <p class="form__status" role="status" data-ok hidden>{c.ok}</p>
+        <p class="form__status" role="alert" data-error hidden>
+          {c.error} <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    if (data.get('_gotcha')) return;
+    const { endpoint, email, subject, sending } = form.dataset;
+    const ok = form.querySelector<HTMLElement>('[data-ok]')!;
+    const error = form.querySelector<HTMLElement>('[data-error]')!;
+    ok.hidden = error.hidden = true;
+
+    // Sin endpoint configurado: abrimos el correo del visitante con el mensaje listo.
+    if (!endpoint) {
+      const labels = [...form.querySelectorAll<HTMLElement>('.field')].map((f) => ({
+        label: f.querySelector('span')!.textContent,
+        value: (f.querySelector('input, select, textarea') as HTMLInputElement).value,
+      }));
+      const body = labels.filter((l) => l.value).map((l) => `${l.label}: ${l.value}`).join('\n');
+      location.href = `mailto:${email}?subject=${encodeURIComponent(subject!)}&body=${encodeURIComponent(body)}`;
+      return;
+    }
+
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.textContent = sending!;
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      ok.hidden = false;
+    } catch {
+      error.hidden = false;
+    } finally {
+      button.disabled = false;
+      button.innerHTML = original;
+    }
+  });
+</script>

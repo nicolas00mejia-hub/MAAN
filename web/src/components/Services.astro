@@ -1,0 +1,33 @@
+---
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+<section class="section" id="servicios">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <p class="eyebrow">{t.services.eyebrow}</p>
+      <h2>{t.services.title} <em>{t.services.titleAccent}</em></h2>
+    </header>
+
+    <ul class="services">
+      {t.services.items.map((s, i) => (
+        <li class="service" data-reveal>
+          <span class="service__num">{num(i)}</span>
+          <h3 class="service__name">{s.name}</h3>
+          <div class="service__body">
+            <p>{s.text}</p>
+            <ul class="tags">
+              {s.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          </div>
+          <span class="service__arrow" aria-hidden="true">↗</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

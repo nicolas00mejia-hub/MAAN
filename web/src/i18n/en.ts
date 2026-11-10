@@ -1,0 +1,108 @@
+import type { Dict } from './es';
+
+export const en: Dict = {
+  lang: 'en',
+  meta: {
+    title: 'Maan Studio — Websites and digital marketing',
+    description:
+      'Digital marketing agency. We design websites and run Meta Ads, Google Ads and TikTok Ads campaigns for brands in the United States and Colombia.',
+  },
+  nav: {
+    services: 'Services',
+    process: 'Process',
+    why: 'Why Maan',
+    contact: 'Contact',
+    cta: "Let's talk",
+    menu: 'Menu',
+    switchLabel: 'Español',
+    switchShort: 'ES',
+  },
+  hero: {
+    eyebrow: 'Digital marketing agency',
+    line1: 'Websites that sell.',
+    line2a: 'Ads that',
+    line2b: 'perform.',
+    lead: 'We design websites and run campaigns on Meta, Google and TikTok for brands that want to grow in the United States and Colombia.',
+    primary: 'Book a call',
+    secondary: 'See services',
+    markets: 'United States · Colombia',
+    langs: 'English · Español',
+    marketsLabel: 'Markets',
+    langsLabel: 'Languages',
+    badge: 'web · meta ads · google ads · tiktok ads · ',
+  },
+  marquee: ['Websites', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'Landing pages', 'E-commerce'],
+  services: {
+    eyebrow: 'Services',
+    title: 'Everything your brand needs to',
+    titleAccent: 'sell online.',
+    items: [
+      {
+        name: 'Websites',
+        text: 'Fast, clear sites and landing pages built to turn visitors into customers. Design and development tailored to your business.',
+        tags: ['UX/UI design', 'Development', 'Landing pages', 'E-commerce', 'Technical SEO'],
+      },
+      {
+        name: 'Meta Ads',
+        text: 'Facebook and Instagram campaigns, from strategy and creative to tracking every conversion.',
+        tags: ['Facebook', 'Instagram', 'Remarketing', 'Catalog', 'WhatsApp'],
+      },
+      {
+        name: 'Google Ads',
+        text: 'Show up right when people are searching for you. Search, Shopping, YouTube and Performance Max campaigns focused on results.',
+        tags: ['Search', 'Shopping', 'YouTube', 'Performance Max'],
+      },
+      {
+        name: 'TikTok Ads',
+        text: 'Ads that feel native to the platform, made to earn attention in the first few seconds.',
+        tags: ['Vertical video', 'Spark Ads', 'Creative', 'Audiences'],
+      },
+    ],
+  },
+  process: {
+    eyebrow: 'Process',
+    title: 'A simple method,',
+    titleAccent: 'no surprises.',
+    steps: [
+      { name: 'Discovery', text: 'We learn your business, your customer and your numbers before proposing anything.' },
+      { name: 'Strategy', text: 'We set goals, channels, budget and what we are going to measure.' },
+      { name: 'Launch', text: 'We build the site, the creative and the campaigns, and go live.' },
+      { name: 'Optimization', text: 'We measure, learn and adjust so every dollar works harder.' },
+    ],
+  },
+  why: {
+    eyebrow: 'Why Maan',
+    title: 'A small agency',
+    titleAccent: 'on purpose.',
+    items: [
+      { name: 'Two markets, one team', text: 'We work with brands in the United States and Colombia, and we understand how each audience buys.' },
+      { name: 'Web and ads under one roof', text: 'Your site and your ads are designed together, so the click ends in a sale and not a bounce.' },
+      { name: 'Truly bilingual', text: 'We create and manage in English and Spanish, with no half-done translations.' },
+      { name: 'Clear numbers', text: 'You know where your budget goes and what it brings back, explained without jargon.' },
+    ],
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: "Let's talk about",
+    titleAccent: 'your project.',
+    lead: 'Tell us what you need and we will get back to you with next steps.',
+    name: 'Name',
+    email: 'Email',
+    company: 'Company or website',
+    service: 'What do you need?',
+    serviceOptions: ['Website', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'Several services', 'Not sure yet'],
+    message: 'Tell us about your project',
+    send: 'Send message',
+    sending: 'Sending…',
+    ok: 'Thank you! We got your message and will be in touch soon.',
+    error: 'We could not send your message. Write to us directly at',
+    orWrite: 'Or write to us at',
+    whatsapp: 'Message us on WhatsApp',
+    subject: 'New project',
+  },
+  footer: {
+    tagline: 'Websites and digital marketing.',
+    rights: 'All rights reserved.',
+    top: 'Back to top',
+  },
+};

@@ -1,0 +1,108 @@
+export const es = {
+  lang: 'es',
+  meta: {
+    title: 'Maan Studio — Páginas web y marketing digital',
+    description:
+      'Agencia de marketing digital. Diseñamos páginas web y gestionamos campañas en Meta Ads, Google Ads y TikTok Ads para marcas en Colombia y Estados Unidos.',
+  },
+  nav: {
+    services: 'Servicios',
+    process: 'Proceso',
+    why: 'Por qué Maan',
+    contact: 'Contacto',
+    cta: 'Hablemos',
+    menu: 'Menú',
+    switchLabel: 'English',
+    switchShort: 'EN',
+  },
+  hero: {
+    eyebrow: 'Agencia de marketing digital',
+    line1: 'Webs que venden.',
+    line2a: 'Anuncios que',
+    line2b: 'rinden.',
+    lead: 'Diseñamos páginas web y gestionamos campañas en Meta, Google y TikTok para marcas que quieren crecer en Colombia y Estados Unidos.',
+    primary: 'Agenda una llamada',
+    secondary: 'Ver servicios',
+    markets: 'Colombia · Estados Unidos',
+    langs: 'Español · English',
+    marketsLabel: 'Mercados',
+    langsLabel: 'Idiomas',
+    badge: 'web · meta ads · google ads · tiktok ads · ',
+  },
+  marquee: ['Páginas web', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'Landing pages', 'E-commerce'],
+  services: {
+    eyebrow: 'Servicios',
+    title: 'Todo lo que tu marca necesita para',
+    titleAccent: 'vender en línea.',
+    items: [
+      {
+        name: 'Páginas web',
+        text: 'Sitios y landing pages rápidos, claros y hechos para convertir visitas en clientes. Diseño y desarrollo a la medida de tu negocio.',
+        tags: ['Diseño UX/UI', 'Desarrollo', 'Landing pages', 'E-commerce', 'SEO técnico'],
+      },
+      {
+        name: 'Meta Ads',
+        text: 'Campañas en Facebook e Instagram, desde la estrategia y las piezas hasta la medición de cada conversión.',
+        tags: ['Facebook', 'Instagram', 'Remarketing', 'Catálogo', 'WhatsApp'],
+      },
+      {
+        name: 'Google Ads',
+        text: 'Aparece justo cuando te están buscando. Campañas de búsqueda, Shopping, YouTube y Performance Max enfocadas en resultados.',
+        tags: ['Búsqueda', 'Shopping', 'YouTube', 'Performance Max'],
+      },
+      {
+        name: 'TikTok Ads',
+        text: 'Anuncios que se sienten nativos de la plataforma, pensados para captar la atención en los primeros segundos.',
+        tags: ['Video vertical', 'Spark Ads', 'Creatividades', 'Audiencias'],
+      },
+    ],
+  },
+  process: {
+    eyebrow: 'Proceso',
+    title: 'Un método simple,',
+    titleAccent: 'sin sorpresas.',
+    steps: [
+      { name: 'Diagnóstico', text: 'Entendemos tu negocio, tu cliente y tus números antes de proponer nada.' },
+      { name: 'Estrategia', text: 'Definimos objetivos, canales, presupuesto y qué vamos a medir.' },
+      { name: 'Lanzamiento', text: 'Construimos la web, las piezas y las campañas, y salimos al aire.' },
+      { name: 'Optimización', text: 'Medimos, aprendemos y ajustamos para que cada peso o dólar rinda más.' },
+    ],
+  },
+  why: {
+    eyebrow: 'Por qué Maan',
+    title: 'Una agencia pequeña',
+    titleAccent: 'a propósito.',
+    items: [
+      { name: 'Dos mercados, un equipo', text: 'Trabajamos con marcas en Colombia y Estados Unidos, y entendemos cómo compra cada audiencia.' },
+      { name: 'Web y pauta bajo el mismo techo', text: 'Tu página y tus anuncios se diseñan juntos, para que el clic termine en una venta y no en un rebote.' },
+      { name: 'Bilingües de verdad', text: 'Creamos y gestionamos en español y en inglés, sin traducciones a medias.' },
+      { name: 'Números claros', text: 'Sabes en qué se invierte tu presupuesto y qué resultados trae, explicado sin tecnicismos.' },
+    ],
+  },
+  contact: {
+    eyebrow: 'Contacto',
+    title: '¿Hablamos de',
+    titleAccent: 'tu proyecto?',
+    lead: 'Cuéntanos qué necesitas y te respondemos con los siguientes pasos.',
+    name: 'Nombre',
+    email: 'Correo',
+    company: 'Empresa o sitio web',
+    service: '¿Qué necesitas?',
+    serviceOptions: ['Página web', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'Varios servicios', 'Aún no lo sé'],
+    message: 'Cuéntanos sobre tu proyecto',
+    send: 'Enviar mensaje',
+    sending: 'Enviando…',
+    ok: '¡Gracias! Recibimos tu mensaje y te escribiremos pronto.',
+    error: 'No pudimos enviar el mensaje. Escríbenos directamente a',
+    orWrite: 'O escríbenos a',
+    whatsapp: 'Escríbenos por WhatsApp',
+    subject: 'Nuevo proyecto',
+  },
+  footer: {
+    tagline: 'Páginas web y marketing digital.',
+    rights: 'Todos los derechos reservados.',
+    top: 'Volver arriba',
+  },
+};
+
+export type Dict = typeof es;

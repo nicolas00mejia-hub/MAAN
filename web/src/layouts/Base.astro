@@ -1,0 +1,70 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '../styles/global.css';
+import { site } from '../config/site';
+import { paths, type Dict, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dict;
+}
+const { locale, t } = Astro.props;
+const abs = (p: string) => new URL(p, site.url).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  url: abs(paths[locale]),
+  description: t.meta.description,
+  email: site.email,
+  areaServed: ['CO', 'US'],
+  knowsLanguage: ['es', 'en'],
+};
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={abs(paths[locale])} />
+    <link rel="alternate" hreflang="es" href={abs(paths.es)} />
+    <link rel="alternate" hreflang="en" href={abs(paths.en)} />
+    <link rel="alternate" hreflang="x-default" href={abs(paths.es)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={abs(paths[locale])} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_CO' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#F3EFE6" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Aparición suave de los bloques al hacer scroll.
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      );
+      items.forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+---
+import { otherLocale, paths, type Dict, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dict;
+}
+const { locale, t } = Astro.props;
+const other = otherLocale(locale);
+const links = [
+  { href: '#servicios', label: t.nav.services },
+  { href: '#proceso', label: t.nav.process },
+  { href: '#por-que', label: t.nav.why },
+  { href: '#contacto', label: t.nav.contact },
+];
+---
+<header class="header" data-header>
+  <div class="wrap header__in">
+    <a class="logo" href={paths[locale]} aria-label="Maan Studio">
+      maan<span class="logo__dot"></span><span class="logo__studio">studio</span>
+    </a>
+    <nav class="nav" id="nav" aria-label={t.nav.menu}>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a class="nav__lang" href={paths[other]} hreflang={other} lang={other} aria-label={t.nav.switchLabel}>
+        {t.nav.switchShort}
+      </a>
+      <a class="btn btn--sm" href="#contacto">{t.nav.cta}</a>
+    </nav>
+    <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label={t.nav.menu} data-burger>
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const setOpen = (open: boolean) => {
+    header.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('no-scroll', open);
+  };
+  burger.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
+  header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

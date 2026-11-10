@@ -1,0 +1,31 @@
+---
+import { site } from '../config/site';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const social = [
+  { label: 'Instagram', href: site.instagram },
+  { label: 'TikTok', href: site.tiktok },
+].filter((s) => s.href);
+---
+<footer class="footer">
+  <div class="wrap">
+    <p class="footer__mark" aria-hidden="true">maan studio</p>
+    <div class="footer__row">
+      <p>{t.footer.tagline}<br />{t.hero.markets}</p>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        {social.map((s) => (
+          <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>
+        ))}
+      </ul>
+      <p class="footer__legal">
+        © {new Date().getFullYear()} {site.name}. {t.footer.rights}<br />
+        <a href="#top">{t.footer.top} ↑</a>
+      </p>
+    </div>
+  </div>
+</footer>
