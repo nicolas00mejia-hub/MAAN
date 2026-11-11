@@ -1090,9 +1090,16 @@ em {
   padding-block: 0.2rem;
 }
 .pillar ul li::before {
-  content: '→';
+  content: '';
+  flex: none;
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.08em;
+  background: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h16M13 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h16M13 5l7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
   margin-right: 0.6rem;
-  color: var(--accent);
 }
 .pillar__arrow {
   position: absolute;
@@ -1415,8 +1422,16 @@ em {
   font-size: 0.9375rem;
 }
 .facts li::before {
-  content: '✳';
-  color: var(--accent);
+  content: '';
+  flex: none;
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.08em;
+  background: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4'/%3E%3C/svg%3E") center / contain no-repeat;
+  margin-top: 0.3em;
 }
 @media (max-width: 60rem) {
   .demos,
@@ -1502,4 +1517,22 @@ em {
   .footer__legal {
     grid-column: 1 / -1;
   }
+}
+
+/* ---------- Íconos SVG ---------- */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+}
+.btn span {
+  display: inline-flex;
+}
+.marquee__track i {
+  display: inline-flex;
+  font-size: 0.8em;
+}
+.chip .icon {
+  margin-right: 0.35em;
 }

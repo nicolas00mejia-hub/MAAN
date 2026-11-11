@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { site } from '../config/site';
 import { routes, type Dict, type Locale, type PageKey } from '../i18n';
 
@@ -31,7 +32,7 @@ const social = [
       </ul>
       <p class="footer__legal">
         © {new Date().getFullYear()} {site.name}. {t.footer.rights}<br />
-        <a href="#top">{t.footer.top} ↑</a>
+        <a href="#top">{t.footer.top} <Icon name="up" /></a>
       </p>
     </div>
   </div>

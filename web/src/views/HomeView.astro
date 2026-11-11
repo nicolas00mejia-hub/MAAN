@@ -1,4 +1,5 @@
 ---
+import Icon from '../components/Icon.astro';
 import Shell from '../components/Shell.astro';
 import Hero from '../components/Hero.astro';
 import Situation from '../components/Situation.astro';
@@ -29,7 +30,7 @@ const t = dictionaries[locale];
         <FlowDemo t={t} />
       </div>
       <p class="more" data-reveal>
-        <a class="btn btn--ghost" href={routes.work[locale]}>{t.demos.more} <span aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href={routes.work[locale]}>{t.demos.more} <span aria-hidden="true"><Icon name="right" /></span></a>
       </p>
     </div>
   </section>

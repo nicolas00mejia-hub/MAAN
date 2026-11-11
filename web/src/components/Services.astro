@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import type { Dict } from '../i18n';
 
 interface Props {
@@ -30,7 +31,7 @@ const groups = t.services.groups.map((g) => ({
                   {s.tags.map((tag) => <li>{tag}</li>)}
                 </ul>
               </div>
-              <span class="service__arrow" aria-hidden="true">↗</span>
+              <span class="service__arrow" aria-hidden="true"><Icon name="up-right" /></span>
             </li>
           ))}
         </ul>

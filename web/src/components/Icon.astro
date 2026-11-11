@@ -1,0 +1,15 @@
+---
+// Íconos dibujados en SVG. No usar caracteres como → ↗ ✳: los teléfonos los muestran como emojis.
+interface Props {
+  name: 'right' | 'up-right' | 'up' | 'replay' | 'star';
+}
+const paths = {
+  right: 'M4 12h16M13 5l7 7-7 7',
+  'up-right': 'M6 18 18 6M8 6h10v10',
+  up: 'M12 20V4M5 11l7-7 7 7',
+  replay: 'M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5',
+  star: 'M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4',
+};
+const { name } = Astro.props;
+---
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]}></path></svg>

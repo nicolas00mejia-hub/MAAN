@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { routes, type Dict, type Locale } from '../i18n';
 
 interface Props {
@@ -22,7 +23,7 @@ const loop = [...t.marquee, ...t.marquee];
       <div class="hero__copy" data-reveal style="--d: 180ms">
         <p class="lead">{t.hero.lead}</p>
         <div class="hero__cta">
-          <a class="btn" href={routes.contact[locale]}>{t.hero.primary} <span aria-hidden="true">→</span></a>
+          <a class="btn" href={routes.contact[locale]}>{t.hero.primary} <span aria-hidden="true"><Icon name="right" /></span></a>
           <a class="btn btn--ghost" href={routes.services[locale]}>{t.hero.secondary}</a>
         </div>
       </div>
@@ -45,7 +46,7 @@ const loop = [...t.marquee, ...t.marquee];
       {loop.map((item) => (
         <span>
           {item}
-          <i>✳</i>
+          <i><Icon name="star" /></i>
         </span>
       ))}
     </div>

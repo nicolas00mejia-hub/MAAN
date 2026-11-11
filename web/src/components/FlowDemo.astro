@@ -1,5 +1,6 @@
 ---
 // Demo animada de un flujo automatizado: los pasos se activan uno tras otro.
+import Icon from './Icon.astro';
 import type { Dict } from '../i18n';
 
 interface Props {
@@ -28,7 +29,7 @@ const f = t.demos.flow;
 
   <div class="demo__foot">
     <p class="demo__note">{f.note}</p>
-    <button type="button" class="chip" data-flow-play>↻ {f.play}</button>
+    <button type="button" class="chip" data-flow-play><Icon name="replay" /> {f.play}</button>
   </div>
 </article>
 

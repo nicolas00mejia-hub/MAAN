@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { routes, type Dict, type Locale } from '../i18n';
 
 interface Props {
@@ -25,14 +26,14 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
             <ul>
               {p.list.map((item) => <li>{item}</li>)}
             </ul>
-            <span class="pillar__arrow" aria-hidden="true">↗</span>
+            <span class="pillar__arrow" aria-hidden="true"><Icon name="up-right" /></span>
           </a>
         </li>
       ))}
     </ul>
 
     <p class="more" data-reveal>
-      <a class="btn btn--ghost" href={routes.services[locale]}>{t.pillars.more} <span aria-hidden="true">→</span></a>
+      <a class="btn btn--ghost" href={routes.services[locale]}>{t.pillars.more} <span aria-hidden="true"><Icon name="right" /></span></a>
     </p>
   </div>
 </section>
