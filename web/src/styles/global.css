@@ -80,7 +80,7 @@ em {
   inset: 0;
   z-index: -1;
   width: 100%;
-  height: 100%;
+  height: 100lvh;
   pointer-events: none;
 }
 :focus-visible {
@@ -1550,8 +1550,7 @@ em {
 .aurora span {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.5;
+  opacity: 0.6;
   will-change: transform;
 }
 .aurora span:nth-child(1) {
@@ -1643,5 +1642,40 @@ em {
   .aurora span,
   .hero__title em {
     animation: none;
+  }
+}
+
+/* ---------- Rendimiento en pantallas táctiles ---------- */
+/* Desenfocar el fondo sobre un lienzo animado es lo más costoso en un teléfono:
+   se cambia por fondos más opacos, y se apagan las animaciones que repintan mucho. */
+@media (hover: none) {
+  .pillar,
+  .demo,
+  .section--dark,
+  .footer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .pillar {
+    background: color-mix(in srgb, var(--paper-2) 90%, transparent);
+  }
+  .demo,
+  .section--dark {
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+  }
+  .footer {
+    background: color-mix(in srgb, #04060f 94%, transparent);
+  }
+  .header.is-scrolled {
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .aurora span,
+  .hero__title em {
+    animation: none;
+  }
+  .halo {
+    display: none;
   }
 }

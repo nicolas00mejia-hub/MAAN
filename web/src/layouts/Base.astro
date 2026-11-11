@@ -53,7 +53,7 @@ const jsonLd = {
   </head>
   <body>
     <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-    <canvas class="atom" data-atom aria-hidden="true"></canvas>
+    <canvas class="atom" data-atom data-page={page} aria-hidden="true"></canvas>
     <div class="halo" data-halo aria-hidden="true"></div>
     <div class="progress" data-progress aria-hidden="true"></div>
     <slot />
@@ -61,12 +61,18 @@ const jsonLd = {
       import '../scripts/scroll';
       import '../scripts/glow';
 
-      // El átomo 3D se carga aparte para no frenar la primera pintura de la página.
+      // La escena 3D se descarga cuando la página ya cargó y el navegador está libre,
+      // para que nunca compita con el texto, los estilos ni las fuentes.
       const canvas = document.querySelector<HTMLCanvasElement>('[data-atom]');
-      if (canvas) {
-        import('../scripts/atom')
-          .then((m) => m.initAtom(canvas))
-          .catch(() => canvas.remove());
+      const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
+      if (canvas && !saveData) {
+        const start = () =>
+          import('../scripts/scene')
+            .then((m) => m.initScene(canvas, canvas.dataset.page as never))
+            .catch(() => canvas.remove());
+        const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 200));
+        if (document.readyState === 'complete') idle();
+        else addEventListener('load', idle, { once: true });
       }
     </script>
   </body>
