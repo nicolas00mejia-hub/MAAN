@@ -8,15 +8,14 @@ interface Props {
 const { t } = Astro.props;
 const c = t.contact;
 ---
-<section class="section contact" id="contacto">
+<section class="section contact contact--page">
   <div class="wrap contact__in">
     <div class="contact__intro" data-reveal>
-      <p class="eyebrow">{c.eyebrow}</p>
-      <h2 data-scrub>{c.title} <em>{c.titleAccent}</em></h2>
-      <p class="lead">{c.lead}</p>
+      <p class="eyebrow">{c.direct}</p>
       <p class="contact__direct">
-        {c.orWrite} <a href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
+      <p>{t.hero.markets}<br />{t.hero.langs}</p>
       {site.whatsapp && (
         <a class="btn btn--dark" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">
           {c.whatsapp} <span aria-hidden="true">↗</span>

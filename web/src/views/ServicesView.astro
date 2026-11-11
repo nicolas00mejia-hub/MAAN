@@ -1,0 +1,18 @@
+---
+import Shell from '../components/Shell.astro';
+import PageHead from '../components/PageHead.astro';
+import Services from '../components/Services.astro';
+import Process from '../components/Process.astro';
+import { dictionaries, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dictionaries[locale];
+---
+<Shell locale={locale} page="services">
+  <PageHead eyebrow={t.services.eyebrow} title={t.services.title} accent={t.services.titleAccent} lead={t.services.lead} />
+  <Services t={t} />
+  <Process t={t} />
+</Shell>

@@ -1,0 +1,15 @@
+---
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+<section class="section situation">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>{t.situation.eyebrow}</p>
+    <h2 class="situation__title" data-scrub>{t.situation.title} <em>{t.situation.titleAccent}</em></h2>
+    <p class="lead" data-reveal>{t.situation.text}</p>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+// Demo animada de un flujo automatizado: los pasos se activan uno tras otro.
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const f = t.demos.flow;
+---
+<article class="demo demo--flow" data-flow data-reveal>
+  <header class="demo__head">
+    <h3>{f.title}</h3>
+    <span class="demo__tag">{t.demos.tag}</span>
+  </header>
+
+  <ol class="flow">
+    {f.steps.map((s) => (
+      <li class="flow__step" data-flow-step>
+        <span class="flow__node" aria-hidden="true"></span>
+        <div>
+          <strong>{s.name}</strong>
+          <span>{s.text}</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="demo__foot">
+    <p class="demo__note">{f.note}</p>
+    <button type="button" class="chip" data-flow-play>↻ {f.play}</button>
+  </div>
+</article>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-flow]').forEach((root) => {
+    const steps = [...root.querySelectorAll<HTMLElement>('[data-flow-step]')];
+    const play = root.querySelector<HTMLButtonElement>('[data-flow-play]')!;
+    let timers: number[] = [];
+
+    const run = () => {
+      timers.forEach(clearTimeout);
+      timers = [];
+      steps.forEach((s) => s.classList.remove('on', 'done'));
+      if (reduce) {
+        steps.forEach((s) => s.classList.add('on', 'done'));
+        return;
+      }
+      steps.forEach((s, i) => {
+        timers.push(
+          window.setTimeout(() => {
+            steps[i - 1]?.classList.add('done');
+            s.classList.add('on');
+            if (i === steps.length - 1) timers.push(window.setTimeout(() => s.classList.add('done'), 900));
+          }, 500 + i * 1300),
+        );
+      });
+    };
+
+    play.addEventListener('click', run);
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          run();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(root);
+  });
+</script>

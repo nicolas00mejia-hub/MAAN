@@ -1,10 +1,11 @@
 ---
-import type { Dict } from '../i18n';
+import { routes, type Dict, type Locale } from '../i18n';
 
 interface Props {
   t: Dict;
+  locale: Locale;
 }
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 const loop = [...t.marquee, ...t.marquee];
 ---
 <section class="hero" data-hero>
@@ -21,8 +22,8 @@ const loop = [...t.marquee, ...t.marquee];
       <div class="hero__copy" data-reveal style="--d: 180ms">
         <p class="lead">{t.hero.lead}</p>
         <div class="hero__cta">
-          <a class="btn" href="#contacto">{t.hero.primary} <span aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="#servicios">{t.hero.secondary}</a>
+          <a class="btn" href={routes.contact[locale]}>{t.hero.primary} <span aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href={routes.services[locale]}>{t.hero.secondary}</a>
         </div>
       </div>
 

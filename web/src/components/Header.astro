@@ -1,30 +1,28 @@
 ---
-import { otherLocale, paths, type Dict, type Locale } from '../i18n';
+import { otherLocale, routes, type Dict, type Locale, type PageKey } from '../i18n';
 
 interface Props {
   locale: Locale;
   t: Dict;
+  page: PageKey;
 }
-const { locale, t } = Astro.props;
+const { locale, t, page } = Astro.props;
 const other = otherLocale(locale);
-const links = [
-  { href: '#servicios', label: t.nav.services },
-  { href: '#proceso', label: t.nav.process },
-  { href: '#por-que', label: t.nav.why },
-  { href: '#contacto', label: t.nav.contact },
-];
+const links: PageKey[] = ['services', 'work', 'about', 'contact'];
 ---
 <header class="header" data-header>
   <div class="wrap header__in">
-    <a class="logo" href={paths[locale]} aria-label="MAAN Studio">
+    <a class="logo" href={routes.home[locale]} aria-label="MAAN Studio">
       MAAN<span class="logo__dot"></span><span class="logo__studio">studio</span>
     </a>
     <nav class="nav" id="nav" aria-label={t.nav.menu}>
-      {links.map((l) => <a href={l.href}>{l.label}</a>)}
-      <a class="nav__lang" href={paths[other]} hreflang={other} lang={other} aria-label={t.nav.switchLabel}>
+      {links.map((key) => (
+        <a href={routes[key][locale]} aria-current={key === page ? 'page' : undefined}>{t.nav[key]}</a>
+      ))}
+      <a class="nav__lang" href={routes[page][other]} hreflang={other} lang={other} aria-label={t.nav.switchLabel}>
         {t.nav.switchShort}
       </a>
-      <a class="btn btn--sm" href="#contacto">{t.nav.cta}</a>
+      <a class="btn btn--sm" href={routes.contact[locale]}>{t.nav.cta}</a>
     </nav>
     <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label={t.nav.menu} data-burger>
       <span></span><span></span>
@@ -41,7 +39,6 @@ const links = [
     document.body.classList.toggle('no-scroll', open);
   };
   burger.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
-  header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
   const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
   addEventListener('scroll', onScroll, { passive: true });

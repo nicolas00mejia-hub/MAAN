@@ -1,0 +1,26 @@
+---
+import { site } from '../config/site';
+import { routes, type Dict, type Locale } from '../i18n';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+---
+<section class="section contact cta">
+  <div class="wrap cta__in" data-reveal>
+    <h2 data-scrub>{t.cta.title} <em>{t.cta.titleAccent}</em></h2>
+    <div class="cta__side">
+      <p class="lead">{t.cta.text}</p>
+      <div class="hero__cta">
+        <a class="btn btn--dark" href={routes.contact[locale]}>{t.cta.primary} <span aria-hidden="true">→</span></a>
+        {site.whatsapp && (
+          <a class="btn btn--ghost" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">
+            {t.contact.whatsapp}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

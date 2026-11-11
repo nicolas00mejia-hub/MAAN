@@ -1,0 +1,17 @@
+---
+// Encabezado de las páginas interiores.
+interface Props {
+  eyebrow: string;
+  title: string;
+  accent: string;
+  lead?: string;
+}
+const { eyebrow, title, accent, lead } = Astro.props;
+---
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>{eyebrow}</p>
+    <h1 data-reveal style="--d: 90ms">{title} <em>{accent}</em></h1>
+    {lead && <p class="lead" data-reveal style="--d: 180ms">{lead}</p>}
+  </div>
+</section>

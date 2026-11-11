@@ -1,0 +1,24 @@
+---
+import Shell from '../components/Shell.astro';
+import PageHead from '../components/PageHead.astro';
+import AgentDemo from '../components/AgentDemo.astro';
+import FlowDemo from '../components/FlowDemo.astro';
+import PageDemo from '../components/PageDemo.astro';
+import { dictionaries, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dictionaries[locale];
+---
+<Shell locale={locale} page="work">
+  <PageHead eyebrow={t.demos.eyebrow} title={t.demos.title} accent={t.demos.titleAccent} lead={t.demos.lead} />
+  <section class="section section--flush">
+    <div class="wrap demos">
+      <AgentDemo t={t} />
+      <FlowDemo t={t} />
+      <PageDemo t={t} />
+    </div>
+  </section>
+</Shell>

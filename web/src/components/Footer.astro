@@ -1,11 +1,13 @@
 ---
 import { site } from '../config/site';
-import type { Dict } from '../i18n';
+import { routes, type Dict, type Locale, type PageKey } from '../i18n';
 
 interface Props {
   t: Dict;
+  locale: Locale;
 }
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
+const links: PageKey[] = ['home', 'services', 'work', 'about', 'contact'];
 const social = [
   { label: 'Instagram', href: site.instagram },
   { label: 'TikTok', href: site.tiktok },
@@ -16,6 +18,11 @@ const social = [
     <p class="footer__mark" aria-hidden="true">MAAN studio</p>
     <div class="footer__row">
       <p>{t.footer.tagline}<br />{t.hero.markets}</p>
+      <ul class="footer__nav">
+        {links.map((key) => (
+          <li><a href={routes[key][locale]}>{t.nav[key]}</a></li>
+        ))}
+      </ul>
       <ul>
         <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
         {social.map((s) => (

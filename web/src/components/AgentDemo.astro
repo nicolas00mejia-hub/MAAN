@@ -1,0 +1,73 @@
+---
+// Demo guionizada de un agente: el visitante elige una pregunta y el agente "escribe" la respuesta.
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const a = t.demos.agent;
+---
+<article class="demo demo--agent" data-agent data-reveal>
+  <header class="demo__head">
+    <h3>{a.title}</h3>
+    <span class="demo__tag">{t.demos.tag}</span>
+  </header>
+
+  <div class="chat">
+    <p class="chat__who"><span class="chat__dot"></span>{a.name}</p>
+    <div class="chat__log" data-log aria-live="polite">
+      <p class="bubble bubble--bot">{a.hello}</p>
+    </div>
+    <p class="chat__pick">{a.pick}</p>
+    <div class="chat__chips">
+      {a.qa.map((item) => (
+        <button type="button" class="chip" data-answer={item.a}>{item.q}</button>
+      ))}
+    </div>
+  </div>
+
+  <p class="demo__note">{a.note}</p>
+</article>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  document.querySelectorAll<HTMLElement>('[data-agent]').forEach((root) => {
+    const log = root.querySelector<HTMLElement>('[data-log]')!;
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip')];
+    const bubble = (cls: string, text = '') => {
+      const p = document.createElement('p');
+      p.className = `bubble ${cls}`;
+      p.textContent = text;
+      log.append(p);
+      log.scrollTop = log.scrollHeight;
+      return p;
+    };
+
+    chips.forEach((chip) =>
+      chip.addEventListener('click', async () => {
+        chips.forEach((c) => (c.disabled = true));
+        chip.classList.add('is-used');
+        bubble('bubble--user', chip.textContent ?? '');
+        const answer = chip.dataset.answer ?? '';
+        const bot = bubble('bubble--bot is-typing');
+        if (reduce) {
+          bot.textContent = answer;
+        } else {
+          bot.innerHTML = '<i></i><i></i><i></i>';
+          await wait(900);
+          bot.textContent = '';
+          for (const ch of answer) {
+            bot.textContent += ch;
+            log.scrollTop = log.scrollHeight;
+            await wait(14);
+          }
+        }
+        bot.classList.remove('is-typing');
+        chips.forEach((c) => (c.disabled = false));
+      }),
+    );
+  });
+</script>

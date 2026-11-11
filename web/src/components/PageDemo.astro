@@ -1,0 +1,19 @@
+---
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const p = t.demos.page;
+---
+<article class="demo" data-reveal>
+  <header class="demo__head">
+    <h3>{p.title}</h3>
+    <span class="demo__tag">{t.demos.tag}</span>
+  </header>
+  <ul class="facts">
+    {p.items.map((item) => <li>{item}</li>)}
+  </ul>
+  <p class="demo__note">{p.note}</p>
+</article>

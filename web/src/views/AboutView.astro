@@ -1,0 +1,18 @@
+---
+import Shell from '../components/Shell.astro';
+import PageHead from '../components/PageHead.astro';
+import Why from '../components/Why.astro';
+import Approach from '../components/Approach.astro';
+import { dictionaries, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dictionaries[locale];
+---
+<Shell locale={locale} page="about">
+  <PageHead eyebrow={t.about.eyebrow} title={t.about.title} accent={t.about.titleAccent} lead={t.about.lead} />
+  <Why t={t} />
+  <Approach t={t} />
+</Shell>

@@ -5,29 +5,36 @@ interface Props {
   t: Dict;
 }
 const { t } = Astro.props;
-const num = (i: number) => String(i + 1).padStart(2, '0');
+let n = 0;
+const groups = t.services.groups.map((g) => ({
+  ...g,
+  items: g.items.map((item) => ({ ...item, num: String(++n).padStart(2, '0') })),
+}));
 ---
-<section class="section" id="servicios">
+<section class="section section--flush">
   <div class="wrap">
-    <header class="section__head" data-reveal>
-      <p class="eyebrow">{t.services.eyebrow}</p>
-      <h2 data-scrub>{t.services.title} <em>{t.services.titleAccent}</em></h2>
-    </header>
-
-    <ul class="services">
-      {t.services.items.map((s, i) => (
-        <li class="service" data-reveal data-enter>
-          <span class="service__num">{num(i)}</span>
-          <h3 class="service__name">{s.name}</h3>
-          <div class="service__body">
-            <p>{s.text}</p>
-            <ul class="tags">
-              {s.tags.map((tag) => <li>{tag}</li>)}
-            </ul>
-          </div>
-          <span class="service__arrow" aria-hidden="true">↗</span>
-        </li>
-      ))}
-    </ul>
+    {groups.map((g) => (
+      <div class="group" id={g.id}>
+        <header class="group__head" data-reveal>
+          <h2 data-scrub>{g.name}</h2>
+          <p>{g.text}</p>
+        </header>
+        <ul class="services">
+          {g.items.map((s) => (
+            <li class="service" data-reveal data-enter>
+              <span class="service__num">{s.num}</span>
+              <h3 class="service__name">{s.name}</h3>
+              <div class="service__body">
+                <p>{s.text}</p>
+                <ul class="tags">
+                  {s.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+              </div>
+              <span class="service__arrow" aria-hidden="true">↗</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 </section>

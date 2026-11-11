@@ -1,0 +1,24 @@
+---
+// Armazón común de todas las páginas: cabecera, contenido, llamada a contacto y pie.
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Cta from './Cta.astro';
+import Footer from './Footer.astro';
+import { dictionaries, type Locale, type PageKey } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  page: PageKey;
+  cta?: boolean;
+}
+const { locale, page, cta = true } = Astro.props;
+const t = dictionaries[locale];
+---
+<Base locale={locale} t={t} page={page}>
+  <Header locale={locale} t={t} page={page} />
+  <main id="top">
+    <slot />
+    {cta && <Cta t={t} locale={locale} />}
+  </main>
+  <Footer t={t} locale={locale} />
+</Base>

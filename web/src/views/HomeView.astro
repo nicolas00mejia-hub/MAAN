@@ -1,0 +1,37 @@
+---
+import Shell from '../components/Shell.astro';
+import Hero from '../components/Hero.astro';
+import Situation from '../components/Situation.astro';
+import Pillars from '../components/Pillars.astro';
+import AgentDemo from '../components/AgentDemo.astro';
+import FlowDemo from '../components/FlowDemo.astro';
+import Process from '../components/Process.astro';
+import { dictionaries, routes, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dictionaries[locale];
+---
+<Shell locale={locale} page="home">
+  <Hero t={t} locale={locale} />
+  <Situation t={t} />
+  <Pillars t={t} locale={locale} />
+  <section class="section section--tight">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">{t.demos.eyebrow}</p>
+        <h2 data-scrub>{t.demos.title} <em>{t.demos.titleAccent}</em></h2>
+      </header>
+      <div class="demos demos--two">
+        <AgentDemo t={t} />
+        <FlowDemo t={t} />
+      </div>
+      <p class="more" data-reveal>
+        <a class="btn btn--ghost" href={routes.work[locale]}>{t.demos.more} <span aria-hidden="true">→</span></a>
+      </p>
+    </div>
+  </section>
+  <Process t={t} />
+</Shell>

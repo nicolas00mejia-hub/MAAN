@@ -1,0 +1,17 @@
+---
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+<section class="section section--dark approach" data-enter>
+  <div class="wrap approach__in">
+    <header data-reveal>
+      <p class="eyebrow">{t.approach.eyebrow}</p>
+      <h2 data-scrub>{t.approach.title} <em>{t.approach.titleAccent}</em></h2>
+    </header>
+    <p class="lead" data-reveal>{t.approach.text}</p>
+  </div>
+</section>
