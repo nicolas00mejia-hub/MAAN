@@ -5,6 +5,7 @@ import {
   IcosahedronGeometry,
   Mesh,
   MeshBasicMaterial,
+  MeshPhysicalMaterial,
   MeshStandardMaterial,
   PointLight,
   SphereGeometry,
@@ -13,7 +14,7 @@ import {
   TorusGeometry,
   type Material,
 } from 'three';
-import { radial } from './textures';
+import { pearlEnv, pearlSkin, radial } from './textures';
 import { ACCENT, BONE, ICE, type Variant } from './variants';
 
 const TAU = Math.PI * 2;
@@ -30,6 +31,24 @@ export function buildAtom(v: Variant, lite: boolean) {
   };
   const glossy = (color: number, emissive = 0.18) =>
     new MeshStandardMaterial({ color, emissive: color, emissiveIntensity: emissive, metalness: 0.35, roughness: 0.22 });
+  // Blanco perla: nácar con vetas arcoíris que recorren el anillo, luz propia y barniz brillante.
+  const skin = pearlSkin();
+  const pearl = () =>
+    new MeshPhysicalMaterial({
+      color: 0xffffff,
+      map: skin,
+      emissive: 0xffffff,
+      emissiveMap: skin,
+      emissiveIntensity: 0.75,
+      metalness: 0.2,
+      roughness: 0.18,
+      clearcoat: 1,
+      clearcoatRoughness: 0.1,
+      envMap: pearlEnv(),
+      envMapIntensity: 0.9,
+    });
+  // Halo suave alrededor del anillo perla.
+  const halo = () => new MeshBasicMaterial({ map: skin, blending: AdditiveBlending, depthWrite: false, opacity: 0.16 });
   const seg = lite ? 20 : 40;
 
   // ----- Núcleo -----
@@ -79,8 +98,12 @@ export function buildAtom(v: Variant, lite: boolean) {
   const rings = v.rings.map((spec) => {
     const pivot = new Group();
     pivot.rotation.set(...spec.tilt);
-    const entry = track(glossy(spec.color));
+    const entry = track(spec.finish === 'pearl' ? pearl() : glossy(spec.color));
     pivot.add(new Mesh(new TorusGeometry(spec.r, spec.tube, lite ? 10 : 20, lite ? 90 : 160), entry.mat));
+    if (spec.finish === 'pearl') {
+      track(halo()).f = 0.16;
+      pivot.add(new Mesh(new TorusGeometry(spec.r, spec.tube * 2.8, 10, lite ? 90 : 160), mats[mats.length - 1].mat));
+    }
     const electrons = Array.from({ length: spec.electrons }, () => {
       const e = new Mesh(electronGeo, electronMat);
       pivot.add(e);
@@ -95,6 +118,8 @@ export function buildAtom(v: Variant, lite: boolean) {
   /** t = segundos, dt = segundos del cuadro, s = pantallas de scroll, vel = velocidad del scroll */
   const update = (t: number, dt: number, s: number, vel: number) => {
     spun += dt * (0.35 + Math.min(6, Math.abs(vel)) * 1.6);
+    // Las vetas del nácar se deslizan por el anillo y giran alrededor del tubo.
+    skin.offset.set(t * 0.02, t * 0.07);
     rings.forEach((r, i) => {
       const { pivot, spec } = r;
       const [tx, ty, tz] = spec.tilt;

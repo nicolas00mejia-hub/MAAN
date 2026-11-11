@@ -13,6 +13,8 @@ export interface RingSpec {
   tilt: [number, number, number];
   spin: number;
   electrons: number;
+  /** 'pearl' = blanco perla luminoso con reflejos arcoíris. */
+  finish?: 'pearl';
 }
 
 /** Punto del recorrido. `at` = pantallas de scroll; x/y = fracción del ancho/alto visible (0 = centro). */
@@ -54,7 +56,7 @@ export const variants: Record<PageKey, Variant> = {
     rings: [
       { r: 1.35, tube: 0.045, color: ACCENT, tilt: [1.25, 0.2, 0], spin: 0.9, electrons: 1 },
       { r: 2.0, tube: 0.05, color: ICE, tilt: [0.5, 0.9, 0.3], spin: -0.6, electrons: 1 },
-      { r: 2.65, tube: 0.06, color: BONE, tilt: [-0.35, -0.5, 0.6], spin: 0.4, electrons: 1 },
+      { r: 2.65, tube: 0.075, color: 0xffffff, tilt: [-0.35, -0.5, 0.6], spin: 0.4, electrons: 1, finish: 'pearl' },
     ],
     wide: [w(0, 0.27, -0.03, 0.88, 1), w(1, -0.3, 0, 1.3, 0.32), w(2, 0.3, -0.05, 1.8, 0.22), w(3.2, -0.05, 0.05, 2.3, 0.16), w(4.6, 0.32, 0.1, 1.5, 0.26), w(7, -0.3, -0.1, 1.2, 0.3)],
     narrow: [w(0, 0.27, 0.27, 0.55, 0.85), w(1, -0.3, -0.15, 0.9, 0.3), w(2.5, 0.35, 0.2, 1.2, 0.22), w(4.5, -0.35, 0, 1.4, 0.2), w(7, 0.3, -0.2, 1, 0.26)],

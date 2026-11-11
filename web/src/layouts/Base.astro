@@ -69,7 +69,10 @@ const jsonLd = {
         const start = () =>
           import('../scripts/scene')
             .then((m) => m.initScene(canvas, canvas.dataset.page as never))
-            .catch(() => canvas.remove());
+            .catch((err) => {
+              console.warn('Escena 3D desactivada:', err);
+              canvas.remove();
+            });
         const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 200));
         if (document.readyState === 'complete') idle();
         else addEventListener('load', idle, { once: true });
