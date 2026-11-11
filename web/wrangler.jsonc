@@ -1,0 +1,8 @@
+// Configuración de publicación en Cloudflare: sirve la carpeta dist como sitio estático.
+{
+  "name": "maan",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
