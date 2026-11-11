@@ -1,14 +1,17 @@
 /* ---------- Tokens ---------- */
 :root {
-  --paper: #f3efe6;
-  --paper-2: #e9e3d5;
-  --ink: #111110;
-  --ink-soft: #55524b;
-  --line: rgba(17, 17, 16, 0.16);
+  /* Tema oscuro: --paper es el fondo y --ink el texto. */
+  --paper: #070b1a;
+  --paper-2: #111a33;
+  --panel: #0d1428;
+  --ink: #f2efe8;
+  --ink-soft: #9ba4ba;
+  --line: rgba(242, 239, 232, 0.16);
   --accent: #ff4d1c;
-  --on-dark: #f3efe6;
-  --on-dark-soft: #a8a49a;
-  --line-dark: rgba(243, 239, 230, 0.18);
+  /* Colores para superficies claras o de acento (texto oscuro encima). */
+  --on-dark: #070b1a;
+  --on-dark-soft: #4a5165;
+  --line-dark: rgba(7, 11, 26, 0.2);
 
   --sans: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
   --serif: 'Instrument Serif', Georgia, serif;
@@ -32,7 +35,9 @@ html {
 }
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    radial-gradient(90rem 60rem at 85% -10%, rgba(127, 155, 255, 0.13), transparent 60%),
+    var(--paper);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -70,7 +75,15 @@ em {
 }
 ::selection {
   background: var(--accent);
-  color: var(--ink);
+  color: var(--on-dark);
+}
+.atom {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -132,7 +145,7 @@ em {
 .btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--ink);
+  color: var(--on-dark);
 }
 .btn:hover span {
   transform: translateX(4px);
@@ -340,7 +353,8 @@ em {
 }
 .hero__row {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 34rem) auto;
+  justify-content: start;
   align-items: end;
   gap: clamp(2rem, 5vw, 5rem);
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
@@ -469,8 +483,8 @@ em {
   text-wrap: balance;
 }
 .section--dark {
-  background: var(--ink);
-  color: var(--on-dark);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--line);
   --r: clamp(1.5rem, 3vw, 3rem);
   clip-path: inset(0 calc(0.75rem + (1 - var(--enter, 1)) * 6vw) round var(--r));
 }
@@ -583,7 +597,7 @@ em {
 }
 .steps__bar {
   height: 1.5px;
-  background: var(--line-dark);
+  background: var(--line);
 }
 .steps__bar span {
   display: block;
@@ -597,7 +611,7 @@ em {
 }
 .step + .step {
   padding-left: clamp(1rem, 2vw, 2rem);
-  border-left: 1.5px solid var(--line-dark);
+  border-left: 1.5px solid var(--line);
 }
 .step__num {
   display: block;
@@ -615,7 +629,7 @@ em {
 }
 .step p {
   margin-top: 0.6rem;
-  color: var(--on-dark-soft);
+  color: var(--ink-soft);
 }
 @media (max-width: 60rem) {
   .steps {
@@ -683,8 +697,11 @@ em {
 .why__item:nth-child(3) {
   background: var(--accent);
 }
+.why__item:nth-child(3) {
+  color: var(--on-dark);
+}
 .why__item:nth-child(3) p {
-  color: var(--ink);
+  color: var(--on-dark);
 }
 .why__item h3 {
   font-size: clamp(1.375rem, 2vw, 1.75rem);
@@ -715,6 +732,10 @@ em {
 
 /* ---------- Contacto ---------- */
 .contact {
+  /* Bloque de acento: texto oscuro sobre naranja. */
+  --ink: #070b1a;
+  --paper: #f2efe8;
+  color: var(--ink);
   background: var(--accent);
   border-radius: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem) 0 0;
 }
@@ -819,8 +840,8 @@ em {
 
 /* ---------- Footer ---------- */
 .footer {
-  background: var(--ink);
-  color: var(--on-dark);
+  background: #04060f;
+  color: var(--ink);
   padding-block: clamp(3rem, 6vw, 5rem) 2rem;
   overflow: hidden;
 }
@@ -837,12 +858,12 @@ em {
   gap: 2rem;
   margin-top: clamp(2.5rem, 5vw, 4rem);
   padding-top: 1.5rem;
-  border-top: 1.5px solid var(--line-dark);
+  border-top: 1.5px solid var(--line);
   font-size: 0.9375rem;
-  color: var(--on-dark-soft);
+  color: var(--ink-soft);
 }
 .footer__row a {
-  color: var(--on-dark);
+  color: var(--ink);
 }
 .footer__row a:hover {
   color: var(--accent);
@@ -880,9 +901,6 @@ em {
 }
 .line__in--b {
   transform: translateX(calc(var(--hp, 0) * 9vw));
-}
-.badge {
-  transform: rotate(calc(var(--hp, 0) * 220deg));
 }
 .motion [data-scrub] .w {
   opacity: 0.16;

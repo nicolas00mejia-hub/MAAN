@@ -42,17 +42,26 @@ const jsonLd = {
     <meta property="og:url" content={abs(paths[locale])} />
     <meta property="og:locale" content={locale === 'es' ? 'es_CO' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#F3EFE6" />
+    <meta name="theme-color" content="#070B1A" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>
   </head>
   <body>
+    <canvas class="atom" data-atom aria-hidden="true"></canvas>
     <div class="progress" data-progress aria-hidden="true"></div>
     <slot />
     <script>
       import '../scripts/scroll';
+
+      // El átomo 3D se carga aparte para no frenar la primera pintura de la página.
+      const canvas = document.querySelector<HTMLCanvasElement>('[data-atom]');
+      if (canvas) {
+        import('../scripts/atom')
+          .then((m) => m.initAtom(canvas))
+          .catch(() => canvas.remove());
+      }
     </script>
   </body>
 </html>
