@@ -24,6 +24,10 @@ const common = /* glsl */ `
   vec3 hue(float h) {
     return clamp(abs(fract(h + vec3(0.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0) - 1.0, 0.0, 1.0);
   }
+  // Tono pastel: el color mezclado con blanco, para que el viso sea sobrio.
+  vec3 tint(float h) {
+    return mix(hue(h), vec3(1.0), 0.5);
+  }
 `;
 
 // El aro: casi blanco de frente, con color en los cantos; un brillo recorre el anillo.
@@ -34,11 +38,11 @@ const ringFragment = /* glsl */ `
     vec3 v = normalize(vV);
     float edge = 1.0 - abs(dot(n, v));
     float h = vUv.x * 2.0 + vUv.y * 0.7 + edge * 0.9 + uTime * 0.13;
-    vec3 col = mix(vec3(1.0), hue(h), 0.16 + 0.62 * pow(edge, 1.15));
+    vec3 col = mix(vec3(1.0), tint(h), 0.06 + 0.42 * pow(edge, 1.4));
     float spec = pow(max(dot(n, normalize(v + vec3(0.3, 0.6, 0.7))), 0.0), 28.0);
     float sweep = pow(0.5 + 0.5 * sin(vUv.x * 6.2832 * 2.0 - uTime * 1.5), 26.0);
-    col += spec * 0.9 + sweep * 0.45;
-    gl_FragColor = vec4(col * 1.12, uOpacity);
+    col += spec * 0.7 + sweep * 0.3;
+    gl_FragColor = vec4(col, uOpacity);
   }
 `;
 
@@ -49,7 +53,7 @@ const glowFragment = /* glsl */ `
   uniform float uFalloff;
   void main() {
     float core = pow(abs(dot(normalize(vN), normalize(vV))), uFalloff);
-    vec3 col = mix(vec3(1.0), hue(vUv.x * 2.0 + uTime * 0.13), 0.5);
+    vec3 col = mix(vec3(1.0), tint(vUv.x * 2.0 + uTime * 0.13), 0.45);
     gl_FragColor = vec4(col, core * uStrength * uOpacity);
   }
 `;
@@ -75,8 +79,8 @@ export function makePearl() {
     ring,
     // Dos capas: una ceñida y brillante, otra amplia y tenue.
     glows: [
-      { mat: glow(0.6, 2.4), tube: 3.2 },
-      { mat: glow(0.22, 3.2), tube: 9 },
+      { mat: glow(0.42, 2.6), tube: 3 },
+      { mat: glow(0.1, 3.4), tube: 8 },
     ],
     tick: (t: number) => (time.value = t),
   };

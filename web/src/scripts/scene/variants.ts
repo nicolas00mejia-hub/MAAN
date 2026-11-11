@@ -41,6 +41,8 @@ export type Core = 'sphere' | 'crystal' | 'twin';
 
 export interface Variant {
   core: Core;
+  /** Malla de alambre que envuelve el núcleo y gira despacio. */
+  cage?: boolean;
   mode: Mode;
   rings: RingSpec[];
   /** Cuánto gira el conjunto por cada pantalla de scroll. */
@@ -64,6 +66,7 @@ export const variants: Record<PageKey, Variant> = {
   // Inicio: el átomo clásico, tres órbitas que se cruzan.
   home: {
     core: 'sphere',
+    cage: true,
     mode: 'orbit',
     scrollSpin: 0.5,
     rings: [

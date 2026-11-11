@@ -44,8 +44,15 @@ export function buildAtom(v: Variant, lite: boolean) {
     track(m);
     return new Mesh(new SphereGeometry(r, seg, seg), m);
   };
+  let cage: Mesh | undefined;
   if (v.core === 'sphere') {
     core.add(ball(0.5, ACCENT));
+    if (v.cage) {
+      const wire = new MeshBasicMaterial({ color: BONE, wireframe: true });
+      track(wire).f = 0.55;
+      cage = new Mesh(new IcosahedronGeometry(0.82, 1), wire);
+      group.add(cage);
+    }
   } else if (v.core === 'twin') {
     const a = ball(0.36, ACCENT);
     const b = ball(0.36, ICE);
@@ -141,6 +148,7 @@ export function buildAtom(v: Variant, lite: boolean) {
       });
     });
 
+    if (cage) cage.rotation.set(t * 0.22 + s * 0.6, t * 0.3 + s * 0.9, 0);
     if (v.core === 'twin') core.rotation.set(0.35, t * 0.9 + s * 1.5, 0.3);
     else if (v.core === 'crystal') core.rotation.set(spun * 0.4, spun * 0.55, 0);
     else core.scale.setScalar(1 + Math.sin(t * 1.8) * 0.04);
