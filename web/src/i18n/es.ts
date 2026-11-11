@@ -1,14 +1,14 @@
 export const es = {
   lang: 'es',
   meta: {
-    title: 'Maan Studio — Páginas web y marketing digital',
+    title: 'MAAN Studio — Páginas web y marketing digital',
     description:
       'Agencia de marketing digital. Diseñamos páginas web y gestionamos campañas en Meta Ads, Google Ads y TikTok Ads para marcas en Colombia y Estados Unidos.',
   },
   nav: {
     services: 'Servicios',
     process: 'Proceso',
-    why: 'Por qué Maan',
+    why: 'Por qué MAAN',
     contact: 'Contacto',
     cta: 'Hablemos',
     menu: 'Menú',
@@ -69,7 +69,7 @@ export const es = {
     ],
   },
   why: {
-    eyebrow: 'Por qué Maan',
+    eyebrow: 'Por qué MAAN',
     title: 'Una agencia pequeña',
     titleAccent: 'a propósito.',
     items: [

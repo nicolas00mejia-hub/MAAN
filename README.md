@@ -1,4 +1,4 @@
-# Maan Studio
+# MAAN Studio
 
 Agencia de marketing digital. Servicios: páginas web, Meta Ads, Google Ads y TikTok Ads.
 Mercados iniciales: Colombia y Estados Unidos (español e inglés).
@@ -9,7 +9,7 @@ Mercados iniciales: Colombia y Estados Unidos (español e inglés).
 | --- | --- |
 | `web/` | Sitio web de la agencia (Astro, bilingüe ES/EN) |
 | `clientes/` | Una carpeta por cliente. Copia `clientes/_plantilla/` para empezar |
-| `marca/` | Identidad de Maan Studio: logo, colores, tipografías |
+| `marca/` | Identidad de MAAN Studio: logo, colores, tipografías |
 
 ## Sitio web
 

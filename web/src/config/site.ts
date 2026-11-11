@@ -1,7 +1,7 @@
 // Datos generales del sitio. Cambia aquí y se actualiza en toda la web.
 // Los valores marcados con PENDIENTE son provisionales: reemplázalos por los reales.
 export const site = {
-  name: 'Maan Studio',
+  name: 'MAAN Studio',
   url: 'https://maanstudio.com', // PENDIENTE: dominio definitivo
   email: 'hola@maanstudio.com', // PENDIENTE: correo de contacto real
   whatsapp: '', // PENDIENTE: número con indicativo, solo dígitos (ej. 573001234567). Vacío = no se muestra

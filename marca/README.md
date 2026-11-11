@@ -1,4 +1,4 @@
-# Marca Maan Studio
+# Marca MAAN Studio
 
 Identidad provisional usada en el sitio web (se puede cambiar en `web/src/styles/global.css`):
 

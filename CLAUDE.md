@@ -1,4 +1,4 @@
-# Maan Studio
+# MAAN Studio
 
 Agencia de marketing digital (páginas web, Meta Ads, Google Ads, TikTok Ads) para Colombia y Estados Unidos.
 

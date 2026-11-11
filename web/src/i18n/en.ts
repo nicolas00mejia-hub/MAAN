@@ -3,14 +3,14 @@ import type { Dict } from './es';
 export const en: Dict = {
   lang: 'en',
   meta: {
-    title: 'Maan Studio — Websites and digital marketing',
+    title: 'MAAN Studio — Websites and digital marketing',
     description:
       'Digital marketing agency. We design websites and run Meta Ads, Google Ads and TikTok Ads campaigns for brands in the United States and Colombia.',
   },
   nav: {
     services: 'Services',
     process: 'Process',
-    why: 'Why Maan',
+    why: 'Why MAAN',
     contact: 'Contact',
     cta: "Let's talk",
     menu: 'Menu',
@@ -71,7 +71,7 @@ export const en: Dict = {
     ],
   },
   why: {
-    eyebrow: 'Why Maan',
+    eyebrow: 'Why MAAN',
     title: 'A small agency',
     titleAccent: 'on purpose.',
     items: [
