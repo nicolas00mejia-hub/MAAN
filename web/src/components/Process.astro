@@ -7,21 +7,24 @@ interface Props {
 const { t } = Astro.props;
 const num = (i: number) => String(i + 1).padStart(2, '0');
 ---
-<section class="section section--dark" id="proceso">
-  <div class="wrap">
-    <header class="section__head" data-reveal>
-      <p class="eyebrow">{t.process.eyebrow}</p>
-      <h2>{t.process.title} <em>{t.process.titleAccent}</em></h2>
-    </header>
+<section class="section section--dark process" id="proceso" data-enter data-pin>
+  <div class="process__pin">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">{t.process.eyebrow}</p>
+        <h2 data-scrub>{t.process.title} <em>{t.process.titleAccent}</em></h2>
+      </header>
 
-    <ol class="steps">
-      {t.process.steps.map((s, i) => (
-        <li class="step" data-reveal style={`--d: ${i * 80}ms`}>
-          <span class="step__num">{num(i)}</span>
-          <h3>{s.name}</h3>
-          <p>{s.text}</p>
-        </li>
-      ))}
-    </ol>
+      <div class="steps__bar" aria-hidden="true"><span></span></div>
+      <ol class="steps">
+        {t.process.steps.map((s, i) => (
+          <li class="step" data-step>
+            <span class="step__num">{num(i)}</span>
+            <h3>{s.name}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>

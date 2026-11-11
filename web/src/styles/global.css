@@ -321,6 +321,7 @@ em {
 /* ---------- Hero ---------- */
 .hero {
   padding-top: clamp(8rem, 16vw, 12rem);
+  overflow-x: clip;
 }
 .hero__title {
   margin-top: 1.5rem;
@@ -409,6 +410,10 @@ em {
   display: flex;
   width: max-content;
   animation: marquee 36s linear infinite;
+  will-change: transform;
+}
+.motion .marquee__track {
+  animation: none;
 }
 .marquee__track span {
   display: inline-flex;
@@ -466,8 +471,8 @@ em {
 .section--dark {
   background: var(--ink);
   color: var(--on-dark);
-  border-radius: clamp(1.5rem, 3vw, 3rem);
-  margin-inline: clamp(0.5rem, 1.2vw, 1rem);
+  --r: clamp(1.5rem, 3vw, 3rem);
+  clip-path: inset(0 calc(0.75rem + (1 - var(--enter, 1)) * 6vw) round var(--r));
 }
 .section--dark em {
   color: var(--accent);
@@ -575,7 +580,17 @@ em {
 .steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1.5px solid var(--line-dark);
+}
+.steps__bar {
+  height: 1.5px;
+  background: var(--line-dark);
+}
+.steps__bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(var(--pin, 1));
+  transform-origin: left;
 }
 .step {
   padding: clamp(1.5rem, 2.5vw, 2.5rem) clamp(1rem, 2vw, 2rem) 0 0;
@@ -845,6 +860,77 @@ em {
   }
 }
 
+/* ---------- Animaciones ligadas al scroll ---------- */
+/* Las variables --hp, --enter y --pin las actualiza src/scripts/scroll.ts. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(var(--sp, 0));
+  transform-origin: left;
+}
+.line__in {
+  display: block;
+  will-change: transform;
+}
+.line__in--a {
+  transform: translateX(calc(var(--hp, 0) * -9vw));
+}
+.line__in--b {
+  transform: translateX(calc(var(--hp, 0) * 9vw));
+}
+.badge {
+  transform: rotate(calc(var(--hp, 0) * 220deg));
+}
+.motion [data-scrub] .w {
+  opacity: 0.16;
+  transition: opacity 0.4s var(--ease);
+}
+.motion [data-scrub] .w.on {
+  opacity: 1;
+}
+.service__name {
+  transform: translateX(calc((1 - var(--enter, 1)) * -2.5rem));
+}
+.motion .step {
+  opacity: 0.28;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+.motion .step.on {
+  opacity: 1;
+  transform: none;
+}
+.why__item {
+  --e: clamp(0, (var(--enter, 1) - var(--i, 0) * 0.1) / 0.7, 1);
+  transform: translateY(calc((1 - var(--e)) * 7rem)) rotate(calc((1 - var(--e)) * (var(--i, 0) - 1.5) * 4deg));
+  opacity: calc(0.2 + var(--e) * 0.8);
+}
+.footer__mark {
+  transform: translateX(calc((1 - var(--enter, 1)) * -14%));
+}
+/* En pantallas grandes la sección de proceso queda fija mientras avanzan los pasos. */
+@media (min-width: 60rem) and (min-height: 44rem) {
+  .motion .process {
+    height: 280vh;
+    padding-block: 0;
+  }
+  .motion .process__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  .motion .process .section__head {
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
 /* ---------- Animación de entrada ---------- */
 .js [data-reveal] {
   opacity: 0;
@@ -870,5 +956,8 @@ em {
   .badge svg,
   .marquee__track {
     animation: none;
+  }
+  .progress {
+    display: none;
   }
 }

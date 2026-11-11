@@ -12,7 +12,7 @@ const c = t.contact;
   <div class="wrap contact__in">
     <div class="contact__intro" data-reveal>
       <p class="eyebrow">{c.eyebrow}</p>
-      <h2>{c.title} <em>{c.titleAccent}</em></h2>
+      <h2 data-scrub>{c.title} <em>{c.titleAccent}</em></h2>
       <p class="lead">{c.lead}</p>
       <p class="contact__direct">
         {c.orWrite} <a href={`mailto:${site.email}`}>{site.email}</a>

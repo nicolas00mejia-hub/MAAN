@@ -11,12 +11,12 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
   <div class="wrap">
     <header class="section__head" data-reveal>
       <p class="eyebrow">{t.services.eyebrow}</p>
-      <h2>{t.services.title} <em>{t.services.titleAccent}</em></h2>
+      <h2 data-scrub>{t.services.title} <em>{t.services.titleAccent}</em></h2>
     </header>
 
     <ul class="services">
       {t.services.items.map((s, i) => (
-        <li class="service" data-reveal>
+        <li class="service" data-reveal data-enter>
           <span class="service__num">{num(i)}</span>
           <h3 class="service__name">{s.name}</h3>
           <div class="service__body">

@@ -7,13 +7,13 @@ interface Props {
 const { t } = Astro.props;
 const loop = [...t.marquee, ...t.marquee];
 ---
-<section class="hero">
+<section class="hero" data-hero>
   <div class="wrap">
     <p class="eyebrow" data-reveal>{t.hero.eyebrow}</p>
     <h1 class="hero__title">
-      <span class="line" data-reveal>{t.hero.line1}</span>
+      <span class="line" data-reveal><span class="line__in line__in--a">{t.hero.line1}</span></span>
       <span class="line" data-reveal style="--d: 90ms">
-        {t.hero.line2a} <em>{t.hero.line2b}</em>
+        <span class="line__in line__in--b">{t.hero.line2a} <em>{t.hero.line2b}</em></span>
       </span>
     </h1>
 
@@ -50,7 +50,7 @@ const loop = [...t.marquee, ...t.marquee];
   </div>
 
   <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
+    <div class="marquee__track" data-marquee>
       {loop.map((item) => (
         <span>
           {item}
