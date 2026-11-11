@@ -49,7 +49,6 @@ if (!reduce) {
   });
 
   const bar = document.querySelector<HTMLElement>('[data-progress]');
-  const hero = document.querySelector<HTMLElement>('[data-hero]');
   const enters = all('[data-enter]');
   const pins = all('[data-pin]').map((el) => {
     const slides = [...el.querySelectorAll<HTMLElement>('[data-slide]')];
@@ -59,63 +58,82 @@ if (!reduce) {
       slides,
       count: slides.reduce((n, s) => Math.max(n, Number(s.dataset.slide) + 1), 0),
       shown: -1,
+      on: -1,
     };
   });
   const throughs = all('[data-through]');
   const track = document.querySelector<HTMLElement>('[data-marquee]');
 
+  // Para que el scroll sea fluido, primero se MIDE todo y después se ESCRIBE todo:
+  // alternar lecturas y escrituras obliga al navegador a recalcular la página en cada paso.
+  const last = new Map<string, string>();
+  const writes: (() => void)[] = [];
+  const setVar = (el: HTMLElement, id: string, name: string, value: string) => {
+    if (last.get(id) === value) return;
+    last.set(id, value);
+    writes.push(() => el.style.setProperty(name, value));
+  };
+
   const update = () => {
     const vh = innerHeight;
-    bar?.style.setProperty('--sp', clamp(scrollY / (root.scrollHeight - vh || 1)).toFixed(4));
+    writes.length = 0;
 
-    if (hero) {
-      const r = hero.getBoundingClientRect();
-      if (r.bottom > 0) hero.style.setProperty('--hp', clamp(-r.top / r.height).toFixed(4));
-    }
+    // ----- Medir -----
+    if (bar) setVar(bar, 'bar', '--sp', clamp(scrollY / (root.scrollHeight - vh || 1)).toFixed(3));
 
-    for (const el of enters) {
+    enters.forEach((el, i) => {
       const r = el.getBoundingClientRect();
-      if (r.top > vh * 1.2 || r.bottom < -vh * 0.2) continue;
-      el.style.setProperty('--enter', clamp((vh - r.top) / (vh * 0.65)).toFixed(4));
-    }
+      if (r.top > vh * 1.2 || r.bottom < -vh * 0.2) return;
+      setVar(el, `e${i}`, '--enter', clamp((vh - r.top) / (vh * 0.65)).toFixed(3));
+    });
 
     // Avance de un bloque mientras cruza toda la pantalla (0 al entrar, 1 al salir).
-    for (const el of throughs) {
+    throughs.forEach((el, i) => {
       const r = el.getBoundingClientRect();
-      if (r.top > vh || r.bottom < 0) continue;
-      el.style.setProperty('--through', clamp((vh - r.top) / (vh + r.height)).toFixed(4));
-    }
+      if (r.top > vh || r.bottom < 0) return;
+      setVar(el, `t${i}`, '--through', clamp((vh - r.top) / (vh + r.height)).toFixed(3));
+    });
 
     for (const s of scrubs) {
       const r = s.el.getBoundingClientRect();
       const n = Math.round(clamp((vh * 0.92 - r.top) / (vh * 0.5)) * s.words.length);
       if (n === s.shown) continue;
       s.shown = n;
-      s.words.forEach((w, i) => w.classList.toggle('on', i < n));
+      writes.push(() => s.words.forEach((w, i) => w.classList.toggle('on', i < n)));
     }
 
-    for (const pin of pins) {
+    pins.forEach((pin, k) => {
       const { el, steps } = pin;
       const r = el.getBoundingClientRect();
+      if (r.top > vh * 1.5 || r.bottom < -vh * 0.5) return;
       // Sección fijada (alta): avance durante el tramo fijo. Si no, avance al cruzar la pantalla.
       const pinned = r.height > vh * 1.3;
       const p = pinned ? clamp(-r.top / (r.height - vh)) : clamp((vh * 0.7 - r.top) / (r.height * 0.75));
-      el.style.setProperty('--pin', p.toFixed(4));
-      steps.forEach((s, i) => s.classList.toggle('on', p >= (i + 0.35) / steps.length));
+      setVar(el, `p${k}`, '--pin', p.toFixed(3));
+      const on = steps.filter((_, i) => p >= (i + 0.35) / steps.length).length;
+      if (on !== pin.on) {
+        pin.on = on;
+        writes.push(() => steps.forEach((s, i) => s.classList.toggle('on', i < on)));
+      }
       // Diapositivas: solo una activa a la vez (titulares que cambian, frases, frentes de servicio).
       if (pin.count) {
         const idx = Math.min(pin.count - 1, Math.floor(p * pin.count));
         if (idx !== pin.shown) {
           pin.shown = idx;
-          el.style.setProperty('--idx', String(idx));
-          for (const s of pin.slides) {
-            const n = Number(s.dataset.slide);
-            s.classList.toggle('is-active', n === idx);
-            s.classList.toggle('is-past', n < idx);
-          }
+          writes.push(() => {
+            el.style.setProperty('--idx', String(idx));
+            for (const s of pin.slides) {
+              const n = Number(s.dataset.slide);
+              s.classList.toggle('is-active', n === idx);
+              s.classList.toggle('is-past', n < idx);
+            }
+          });
         }
       }
-    }
+    });
+
+    // ----- Escribir -----
+    for (const w of writes) w();
   };
 
   // Cinta de servicios: se acelera y cambia de dirección con el scroll.

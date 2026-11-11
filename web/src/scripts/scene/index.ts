@@ -52,9 +52,11 @@ export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
   const lite = touch || innerWidth < 720;
   const variant = variants[page] ?? variants.home;
 
-  // En celular: menos resolución interna y sin antialias, que es lo que más cuesta.
-  let dpr = Math.min(devicePixelRatio || 1, lite ? 1.5 : 2);
-  const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: !lite, powerPreference: 'high-performance' });
+  // Nitidez: hasta 2 píxeles reales por punto y bordes suavizados, también en celular.
+  // (Más de 2 no se nota a simple vista y cuesta el doble.)
+  let dpr = Math.min(devicePixelRatio || 1, 2);
+  const minDpr = lite ? 1.5 : 1;
+  const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(dpr);
 
   const scene = new Scene();
@@ -78,8 +80,10 @@ export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
   let w = 0;
   let h = 0;
   const resize = (force = false) => {
-    const nw = innerWidth;
-    const nh = innerHeight;
+    // Se usa el tamaño real del lienzo en pantalla (alto estable en celular), no el de la ventana:
+    // si no coinciden, la imagen se estira y se ve borrosa.
+    const nw = canvas.clientWidth || innerWidth;
+    const nh = canvas.clientHeight || innerHeight;
     if (!force && nw === w && Math.abs(nh - h) < 160) return;
     w = nw;
     h = nh;
@@ -160,11 +164,13 @@ export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
   let slow = 0;
   let frames = 0;
   const watch = (ms: number) => {
+    // Los primeros cuadros no cuentan: ahí se compilan los shaders y siempre son lentos.
+    if (clock < 3) return;
     frames++;
-    if (ms > 24) slow++;
-    if (frames < 90) return;
-    if (slow > 30 && dpr > 1) {
-      dpr = Math.max(1, dpr - 0.25);
+    if (ms > 28) slow++;
+    if (frames < 120) return;
+    if (slow > 70 && dpr > minDpr) {
+      dpr = Math.max(minDpr, dpr - 0.25);
       renderer.setPixelRatio(dpr);
       renderer.setSize(w, h, false);
     }

@@ -1456,6 +1456,10 @@ em {
   .halo {
     display: none;
   }
+  /* El desenfoque al cambiar de frase es caro en teléfonos. */
+  .motion .swap__item {
+    filter: none;
+  }
 }
 
 /* ================= Inicio por capítulos ================= */

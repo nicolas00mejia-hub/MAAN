@@ -33,7 +33,7 @@ export function buildAtom(v: Variant, lite: boolean) {
   const glossy = (color: number, emissive = 0.18) =>
     new MeshStandardMaterial({ color, emissive: color, emissiveIntensity: emissive, metalness: 0.35, roughness: 0.22 });
   const pearl = makePearl();
-  const seg = lite ? 20 : 40;
+  const seg = lite ? 32 : 40;
 
   // ----- Núcleo -----
   const core = new Group();
@@ -85,14 +85,15 @@ export function buildAtom(v: Variant, lite: boolean) {
   // ----- Anillos y electrones -----
   const electronMat = new MeshBasicMaterial({ color: BONE });
   track(electronMat);
-  const electronGeo = new SphereGeometry(0.11, 14, 14);
+  const electronGeo = new SphereGeometry(0.11, 18, 18);
   const rings = v.rings.map((spec) => {
     const pivot = new Group();
     pivot.rotation.set(...spec.tilt);
     const entry = track(spec.finish === 'pearl' ? pearl.ring : glossy(spec.color));
-    pivot.add(new Mesh(new TorusGeometry(spec.r, spec.tube, lite ? 10 : 20, lite ? 90 : 160), entry.mat));
+    pivot.add(new Mesh(new TorusGeometry(spec.r, spec.tube, lite ? 16 : 20, lite ? 128 : 160), entry.mat));
     if (spec.finish === 'pearl') {
-      for (const g of pearl.glows) {
+      // En celular solo la capa ceñida: la amplia cubre mucha pantalla y cuesta fluidez.
+      for (const g of lite ? pearl.glows.slice(0, 1) : pearl.glows) {
         track(g.mat);
         pivot.add(new Mesh(new TorusGeometry(spec.r, spec.tube * g.tube, 16, lite ? 90 : 160), g.mat));
       }

@@ -7,7 +7,7 @@ Agencia de marketing digital (páginas web, Meta Ads, Google Ads, TikTok Ads, ag
 - Todo texto visible va en los dos idiomas: `web/src/i18n/es.ts` y `en.ts` (mismas claves).
 - Datos de contacto y redes solo en `web/src/config/site.ts`.
 - Inicio por capítulos fijos (`data-pin` + `data-slide`, lógica en `web/src/scripts/scroll.ts`); cada capítulo lleva `data-ch` y el recorrido del átomo se ancla a ellos en `variants.ts` (`stops`).
-- Fondo 3D en `web/src/scripts/scene/`: el átomo de cada página (forma, movimiento y recorrido con el scroll) se define en `variants.ts`. Se carga después de la página; en táctiles usa menos resolución y sin desenfoques.
+- Fondo 3D en `web/src/scripts/scene/`: el átomo de cada página (forma, movimiento y recorrido con el scroll) se define en `variants.ts`. Se carga después de la página; en táctiles conserva la nitidez (2x con antialias) y ahorra en geometría, resplandores y desenfoques CSS.
 - Íconos y flechas con `web/src/components/Icon.astro` (SVG); no usar caracteres como → ↗ ✳ porque los teléfonos los muestran como emojis.
 - No inventar clientes, testimonios ni cifras de resultados en el sitio.
 - `clientes/`: una carpeta por cliente a partir de `clientes/_plantilla/`. Sin credenciales en el repo.
