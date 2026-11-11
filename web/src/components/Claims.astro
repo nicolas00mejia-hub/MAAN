@@ -1,0 +1,17 @@
+---
+// Frases que pasan una a una con el scroll: la activa brilla, las vecinas se atenúan.
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+<section class="claims" data-ch="claims" data-pin>
+  <div class="claims__stick">
+    <p class="eyebrow">{t.claims.eyebrow}</p>
+    <ul class="claims__list">
+      {t.claims.items.map((item, i) => <li data-slide={i}><span>{item}</span></li>)}
+    </ul>
+  </div>
+</section>

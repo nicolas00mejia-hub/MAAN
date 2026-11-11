@@ -1,0 +1,25 @@
+---
+// Tarjetas que caen girando en 3D y aterrizan en una cuadrícula.
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+<section class="section facts-sec" data-ch="facts">
+  <div class="wrap">
+    <header class="section__head" data-reveal>
+      <p class="eyebrow">{t.facts.eyebrow}</p>
+      <h2 data-scrub>{t.facts.title} <em>{t.facts.titleAccent}</em></h2>
+    </header>
+    <ul class="tumble" data-enter>
+      {t.facts.items.map((f, i) => (
+        <li class="tumble__card" style={`--i: ${i}`}>
+          <strong>{f.big}</strong>
+          <span>{f.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

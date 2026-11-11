@@ -1,4 +1,5 @@
 ---
+// Portada fija: mientras se hace scroll, el titular cambia de frase y el átomo acompaña.
 import Icon from './Icon.astro';
 import { routes, type Dict, type Locale } from '../i18n';
 
@@ -9,46 +10,51 @@ interface Props {
 const { t, locale } = Astro.props;
 const loop = [...t.marquee, ...t.marquee];
 ---
-<section class="hero" data-hero>
-  <div class="wrap">
-    <p class="eyebrow" data-reveal>{t.hero.eyebrow}</p>
-    <h1 class="hero__title">
-      <span class="line" data-reveal><span class="line__in line__in--a">{t.hero.line1}</span></span>
-      <span class="line" data-reveal style="--d: 90ms">
-        <span class="line__in line__in--b">{t.hero.line2a} <em>{t.hero.line2b}</em></span>
-      </span>
-    </h1>
+<section class="hero" data-ch="hero" data-pin>
+  <div class="hero__stick">
+    <div class="wrap hero__main">
+      <p class="eyebrow" data-reveal>{t.hero.eyebrow}</p>
+      <h1 class="hero__title swap" data-reveal style="--d: 90ms">
+        {t.hero.phrases.map((p, i) => (
+          <span class="swap__item" data-slide={i}>
+            {p.a} <em>{p.b}</em>
+          </span>
+        ))}
+      </h1>
 
-    <div class="hero__row">
-      <div class="hero__copy" data-reveal style="--d: 180ms">
-        <p class="lead">{t.hero.lead}</p>
-        <div class="hero__cta">
-          <a class="btn" href={routes.contact[locale]}>{t.hero.primary} <span aria-hidden="true"><Icon name="right" /></span></a>
-          <a class="btn btn--ghost" href={routes.services[locale]}>{t.hero.secondary}</a>
+      <div class="hero__row">
+        <div class="hero__copy" data-reveal style="--d: 180ms">
+          <p class="lead">{t.hero.lead}</p>
+          <div class="hero__cta">
+            <a class="btn" href={routes.contact[locale]}>{t.hero.primary} <span aria-hidden="true"><Icon name="right" /></span></a>
+            <a class="btn btn--ghost" href={routes.services[locale]}>{t.hero.secondary}</a>
+          </div>
         </div>
+
+        <dl class="hero__facts" data-reveal style="--d: 260ms">
+          <div>
+            <dt>{t.hero.marketsLabel}</dt>
+            <dd>{t.hero.markets}</dd>
+          </div>
+          <div>
+            <dt>{t.hero.langsLabel}</dt>
+            <dd>{t.hero.langs}</dd>
+          </div>
+        </dl>
+
+        <p class="hero__scroll" aria-hidden="true"><span></span>{t.hero.scroll}</p>
       </div>
-
-      <dl class="hero__facts" data-reveal style="--d: 260ms">
-        <div>
-          <dt>{t.hero.marketsLabel}</dt>
-          <dd>{t.hero.markets}</dd>
-        </div>
-        <div>
-          <dt>{t.hero.langsLabel}</dt>
-          <dd>{t.hero.langs}</dd>
-        </div>
-      </dl>
     </div>
-  </div>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track" data-marquee>
-      {loop.map((item) => (
-        <span>
-          {item}
-          <i><Icon name="star" /></i>
-        </span>
-      ))}
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" data-marquee>
+        {loop.map((item) => (
+          <span>
+            {item}
+            <i><Icon name="star" /></i>
+          </span>
+        ))}
+      </div>
     </div>
   </div>
 </section>

@@ -4,7 +4,7 @@ import { AmbientLight, DirectionalLight, PerspectiveCamera, PointLight, Scene, W
 import type { PageKey } from '../../i18n';
 import { buildAtom } from './atom';
 import { buildStars } from './stars';
-import { ICE, variants, type Waypoint } from './variants';
+import { ICE, variants, type Stop, type Waypoint } from './variants';
 
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
 const ease = (t: number) => t * t * (3 - 2 * t);
@@ -23,6 +23,27 @@ function along(path: Waypoint[], s: number, out: Waypoint) {
   out.y = mix(a.y, b.y, k);
   out.scale = mix(a.scale, b.scale, k);
   out.glow = mix(a.glow, b.glow, k);
+}
+
+/** Convierte las paradas ancladas a capítulos en puntos del recorrido, midiendo la página real. */
+function resolve(stops: Stop[], vh: number): Waypoint[] {
+  const boxes = new Map<string, { top: number; height: number } | null>();
+  const path: Waypoint[] = [];
+  for (const s of stops) {
+    if (!boxes.has(s.ch)) {
+      const el = document.querySelector<HTMLElement>(`[data-ch="${s.ch}"]`);
+      const r = el?.getBoundingClientRect();
+      boxes.set(s.ch, r ? { top: r.top + scrollY, height: r.height } : null);
+    }
+    const box = boxes.get(s.ch);
+    if (!box) continue;
+    // Capítulo fijo (más alto que la pantalla): f recorre su tramo fijo.
+    // Capítulo normal: f marca qué punto suyo pasa por el centro de la pantalla.
+    const pinned = box.height > vh * 1.3;
+    const y = pinned ? box.top + s.f * (box.height - vh) : box.top + s.f * box.height - vh / 2;
+    path.push({ at: Math.max(0, y / vh), x: s.x, y: s.y, scale: s.scale, glow: s.glow });
+  }
+  return path.sort((a, b) => a.at - b.at);
 }
 
 export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
@@ -80,6 +101,21 @@ export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
     );
   }
 
+  // Recorrido del átomo: fijo por variante, o medido sobre los capítulos de la página.
+  let path = variant.wide;
+  const route = () => {
+    const narrow = camera.aspect < 0.9;
+    const anchored = variant.stops ? resolve(narrow ? variant.stops.narrow : variant.stops.wide, h) : [];
+    path = anchored.length > 1 ? anchored : narrow ? variant.narrow : variant.wide;
+  };
+  route();
+  // La página cambia de alto al cargar fuentes o girar el teléfono: se vuelve a medir.
+  let pending = 0;
+  new ResizeObserver(() => {
+    clearTimeout(pending);
+    pending = window.setTimeout(route, 200);
+  }).observe(document.body);
+
   let s = scrollY / h; // scroll suavizado, en pantallas
   let last = 0;
   let clock = 0;
@@ -98,8 +134,7 @@ export function initScene(canvas: HTMLCanvasElement, page: PageKey) {
 
     stars.update(t, s, mouse.x, mouse.y, intro);
 
-    const narrow = camera.aspect < 0.9;
-    along(narrow ? variant.narrow : variant.wide, s, target);
+    along(path, s, target);
     const viewW = viewH * camera.aspect;
     atom.group.position.set(target.x * viewW, target.y * viewH + Math.sin(t * 0.6) * 0.08, 0);
     atom.group.scale.setScalar(target.scale * Math.max(0.001, easeOutBack(intro)));

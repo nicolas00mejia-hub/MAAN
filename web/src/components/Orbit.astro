@@ -1,0 +1,52 @@
+---
+// "Qué hacemos" fijo en pantalla: el átomo queda a un lado, rodeado de etiquetas,
+// y con el scroll se recorre cada frente de servicio.
+import Icon from './Icon.astro';
+import { routes, type Dict, type Locale } from '../i18n';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+<section class="orbit" data-ch="pillars" data-pin>
+  <div class="orbit__stick">
+    <div class="wrap orbit__in">
+      <div class="orbit__stage" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="50" y1="50" x2="20" y2="16"></line>
+          <line x1="50" y1="50" x2="86" y2="36"></line>
+          <line x1="50" y1="50" x2="30" y2="86"></line>
+        </svg>
+        {t.pillars.items.map((p, i) => (
+          <ul class="orbit__chips" data-slide={i}>
+            {p.list.map((item) => <li>{item}</li>)}
+          </ul>
+        ))}
+      </div>
+
+      <div class="orbit__list">
+        <p class="eyebrow">{t.pillars.eyebrow}</p>
+        <h2>{t.pillars.title} <em>{t.pillars.titleAccent}</em></h2>
+        <ol>
+          {t.pillars.items.map((p, i) => (
+            <li class="orbit__item" data-slide={i}>
+              <span class="orbit__num">{num(i)}</span>
+              <div>
+                <h3>{p.name}</h3>
+                <div class="orbit__more">
+                  <div>
+                    <p>{p.text}</p>
+                    <a href={`${routes.services[locale]}#${p.id}`}>{t.pillars.link} <Icon name="right" /></a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

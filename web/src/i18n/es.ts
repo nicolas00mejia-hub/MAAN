@@ -37,9 +37,12 @@ export const es = {
   },
   hero: {
     eyebrow: 'Marketing digital · IA',
-    line1: 'Webs que venden.',
-    line2a: 'Anuncios que',
-    line2b: 'rinden.',
+    phrases: [
+      { a: 'Webs que', b: 'venden.' },
+      { a: 'Anuncios que', b: 'rinden.' },
+      { a: 'Agentes que', b: 'responden.' },
+    ],
+    scroll: 'Desliza',
     lead: 'Diseñamos páginas web, gestionamos campañas en Meta, Google y TikTok, y construimos agentes de IA y automatizaciones para marcas en Colombia y Estados Unidos.',
     primary: 'Agenda una llamada',
     secondary: 'Ver servicios',
@@ -49,6 +52,21 @@ export const es = {
     langsLabel: 'Idiomas',
   },
   marquee: ['Páginas web', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'Agentes de IA', 'Automatizaciones', 'CRM a la medida'],
+  claims: {
+    eyebrow: 'Por qué MAAN',
+    items: ['Dos mercados, un equipo', 'Web, pauta e IA bajo el mismo techo', 'Bilingües de verdad', 'Números claros, sin tecnicismos', 'Pequeños a propósito'],
+  },
+  facts: {
+    eyebrow: 'En resumen',
+    title: 'MAAN en',
+    titleAccent: 'cuatro datos.',
+    items: [
+      { big: '2', label: 'Mercados: Colombia y Estados Unidos' },
+      { big: '2', label: 'Idiomas: español e inglés' },
+      { big: '7', label: 'Servicios pensados para trabajar juntos' },
+      { big: '1', label: 'Equipo para web, pauta e IA' },
+    ],
+  },
   situation: {
     eyebrow: 'La situación',
     title: 'Tener página y pautar ya no alcanza. Lo difícil es que todo',
@@ -60,6 +78,7 @@ export const es = {
     title: 'Tres frentes,',
     titleAccent: 'un solo equipo.',
     more: 'Ver todos los servicios',
+    link: 'Ver el servicio',
     items: [
       {
         id: 'web',
@@ -151,6 +170,7 @@ export const es = {
     titleAccent: 'Pruébalo.',
     lead: 'Estamos preparando nuestros casos de estudio y no vamos a inventarlos. Mientras tanto, estas demos las puedes usar ahora mismo.',
     more: 'Ver todas las demos',
+    big: 'Míralo funcionar',
     tag: 'Demo',
     agent: {
       title: 'Pregúntale al agente',

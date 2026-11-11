@@ -1,12 +1,14 @@
 ---
-import Icon from '../components/Icon.astro';
 import Shell from '../components/Shell.astro';
 import Hero from '../components/Hero.astro';
+import Claims from '../components/Claims.astro';
 import Situation from '../components/Situation.astro';
-import Pillars from '../components/Pillars.astro';
+import Orbit from '../components/Orbit.astro';
 import AgentDemo from '../components/AgentDemo.astro';
 import FlowDemo from '../components/FlowDemo.astro';
 import Process from '../components/Process.astro';
+import Facts from '../components/Facts.astro';
+import Icon from '../components/Icon.astro';
 import { dictionaries, routes, type Locale } from '../i18n';
 
 interface Props {
@@ -17,9 +19,14 @@ const t = dictionaries[locale];
 ---
 <Shell locale={locale} page="home">
   <Hero t={t} locale={locale} />
+  <Claims t={t} />
   <Situation t={t} />
-  <Pillars t={t} locale={locale} />
-  <section class="section section--tight">
+  <Orbit t={t} locale={locale} />
+
+  <section class="section" data-ch="demos">
+    <p class="bigline" data-through aria-hidden="true">
+      <span>{t.demos.big} — {t.demos.big} — {t.demos.big} —</span>
+    </p>
     <div class="wrap">
       <header class="section__head" data-reveal>
         <p class="eyebrow">{t.demos.eyebrow}</p>
@@ -34,5 +41,7 @@ const t = dictionaries[locale];
       </p>
     </div>
   </section>
+
   <Process t={t} />
+  <Facts t={t} />
 </Shell>

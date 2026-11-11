@@ -38,9 +38,12 @@ export const en: Dict = {
   },
   hero: {
     eyebrow: 'Digital marketing · AI',
-    line1: 'Websites that sell.',
-    line2a: 'Ads that',
-    line2b: 'perform.',
+    phrases: [
+      { a: 'Websites that', b: 'sell.' },
+      { a: 'Ads that', b: 'perform.' },
+      { a: 'Agents that', b: 'answer.' },
+    ],
+    scroll: 'Scroll',
     lead: 'We design websites, run campaigns on Meta, Google and TikTok, and build AI agents and automations for brands in the United States and Colombia.',
     primary: 'Book a call',
     secondary: 'See services',
@@ -50,6 +53,21 @@ export const en: Dict = {
     langsLabel: 'Languages',
   },
   marquee: ['Websites', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'AI agents', 'Automations', 'Custom CRM'],
+  claims: {
+    eyebrow: 'Why MAAN',
+    items: ['Two markets, one team', 'Web, ads and AI under one roof', 'Truly bilingual', 'Clear numbers, no jargon', 'Small on purpose'],
+  },
+  facts: {
+    eyebrow: 'In short',
+    title: 'MAAN in',
+    titleAccent: 'four facts.',
+    items: [
+      { big: '2', label: 'Markets: United States and Colombia' },
+      { big: '2', label: 'Languages: English and Spanish' },
+      { big: '7', label: 'Services designed to work together' },
+      { big: '1', label: 'Team for web, ads and AI' },
+    ],
+  },
   situation: {
     eyebrow: 'The situation',
     title: 'Having a website and running ads is no longer enough. The hard part is making it all',
@@ -61,6 +79,7 @@ export const en: Dict = {
     title: 'Three fronts,',
     titleAccent: 'one team.',
     more: 'See all services',
+    link: 'See the service',
     items: [
       {
         id: 'web',
@@ -152,6 +171,7 @@ export const en: Dict = {
     titleAccent: 'Try it.',
     lead: 'We are preparing our case studies and we are not going to make them up. In the meantime, you can use these demos right now.',
     more: 'See all demos',
+    big: 'See it work',
     tag: 'Demo',
     agent: {
       title: 'Ask the agent',

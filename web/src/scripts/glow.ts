@@ -24,6 +24,26 @@ if (fine && !reduce) {
     });
   });
 
+  // Texto que se "descifra" al pasar el cursor por los enlaces del menú.
+  const glyphs = '#%&$€*+/=|[]{}';
+  document.querySelectorAll<HTMLElement>('.nav a:not(.btn):not(.nav__lang), .footer__nav a').forEach((link) => {
+    const text = link.textContent ?? '';
+    let timer = 0;
+    link.addEventListener('pointerenter', () => {
+      let step = 0;
+      clearInterval(timer);
+      timer = window.setInterval(() => {
+        step++;
+        link.textContent = [...text].map((ch, i) => (i < step || ch === ' ' ? ch : glyphs[Math.floor(Math.random() * glyphs.length)])).join('');
+        if (step >= text.length) clearInterval(timer);
+      }, 32);
+    });
+    link.addEventListener('pointerleave', () => {
+      clearInterval(timer);
+      link.textContent = text;
+    });
+  });
+
   // Halo suave que acompaña al cursor por toda la página.
   const halo = document.querySelector<HTMLElement>('[data-halo]');
   if (halo) {
